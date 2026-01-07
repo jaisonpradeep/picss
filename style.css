@@ -1,0 +1,253 @@
+:root {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --accent-color: #ff5757;
+    --transition-speed: 0.6s;
+    --easing: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
+    min-height: 100vh;
+    /* changed from height to allow scroll */
+    transition: background-color var(--transition-speed) var(--easing);
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100vw;
+    position: relative;
+    z-index: 2;
+}
+
+/* Content Side */
+.content-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem;
+    position: relative;
+    transition: color var(--transition-speed) ease;
+}
+
+.content-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s var(--easing) forwards;
+}
+
+.slide-number {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--accent-color);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 1rem;
+    transition: color 0.5s ease;
+}
+
+.slide-title {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.slide-description {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+/* Controls */
+.controls-area {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.progress-indicators {
+    display: flex;
+    gap: 12px;
+}
+
+.indicator {
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: var(--accent-color);
+}
+
+/* Image Side */
+.image-panel {
+    flex: 1.2;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-origin: center right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    /* Space for the frame to breathe */
+}
+
+#slide-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform var(--transition-speed) var(--easing), opacity 0.4s ease, border-color 0.6s ease;
+    border: 20px solid var(--frame-color);
+    /* The Frame */
+    box-shadow: 0 0 40px 10px rgba(255, 255, 255, 0.7);
+    /* Luminous White Shadow */
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, var(--bg-primary) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(1.05);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive */
+/* Responsive */
+@media (max-width: 900px) {
+    body {
+        overflow-y: auto;
+        /* Allow scrolling on vertical */
+    }
+
+    .app-container {
+        flex-direction: column-reverse;
+        height: auto;
+    }
+
+    .content-panel {
+        flex: 0 0 auto;
+        padding: 2rem 1.5rem;
+        background: var(--bg-primary);
+    }
+
+    .image-panel {
+        flex: 0 0 50vh;
+        /* Give image half height */
+        min-height: 300px;
+    }
+
+    .image-wrapper {
+        padding: 1rem;
+        /* Reduce padding on mobile */
+    }
+
+    #slide-image {
+        border-width: 10px;
+        /* Thinner frame on mobile */
+    }
+
+    .slide-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .slide-description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .slide-number {
+        font-size: 3rem;
+    }
+
+    .image-overlay {
+        background: linear-gradient(to top, var(--bg-primary) 0%, transparent 20%);
+    }
+}
